@@ -1,38 +1,52 @@
-# bluebird — 楽曲特設LP
+# bluebird — 楽曲特設LP(カナトチャット組み込み版)
 
-オリジナル楽曲「bluebird」のランディングページ。静的HTML 1枚 + デモ音源のみの構成で、ビルド不要です。
+オリジナル楽曲「bluebird」のランディングページ。右下の「カナトと話す」ボタンから、ボーカルのカナト本人とチャットできます。
 
 ## 構成
 
-- `index.html` — LP本体(CSS/JS込み)
-- `bluebird_demo.mp3` — デモ音源(プレイヤーで再生)
+- `index.html` — LP本体(CSS/JS込み。ウィジェット読み込みタグ追加済み)
+- `bluebird_demo.mp3` — デモ音源
+- `kanato-widget.js` — チャットウィジェット(LPの配色・フォントに統一済み)
+- `api/chat.js` — Vercelサーバーレス関数。**APIキーとカナトの人格設定はここ**
 
-## 公開手順(GitHub → Vercel)
+## 更新手順(既存のリポジトリに上書き)
 
-1. GitHubで新規リポジトリを作成(例: `bluebird-lp`、Public/Privateどちらでも可)
-2. このフォルダで以下を実行:
+既にGitHub連携でVercelにデプロイ済みの場合:
 
-   ```bash
-   git init
-   git add .
-   git commit -m "bluebird LP"
-   git branch -M main
-   git remote add origin https://github.com/<ユーザー名>/bluebird-lp.git
-   git push -u origin main
-   ```
+```bash
+# このフォルダの中身を既存リポジトリに上書きコピーしてから
+git add .
+git commit -m "add Kanato chat"
+git push
+```
 
-3. [vercel.com](https://vercel.com) にGitHubアカウントでログイン → **Add New › Project** → `bluebird-lp` を **Import**
-4. Framework Preset は **Other** のまま、Build設定は変更せず **Deploy**
-5. `https://bluebird-lp-xxxx.vercel.app` のようなURLが発行されます(以後 `git push` するたび自動で再デプロイ)
+push すると自動で再デプロイされます。**ただし初回はAPIキーの設定が必要です(次項)。**
 
-## 注意: 画像のホスティングについて
+## APIキーの設定(初回のみ・必須)
 
-現在、3枚のビジュアルは生成元(Higgsfield)のCDN URLを直接参照しています。将来リンク切れになる可能性があるため、恒久公開する場合は画像をダウンロードしてリポジトリに含めることを推奨します:
+1. https://console.anthropic.com でAPIキーを取得(従量課金。クレジット購入が必要)
+2. 同コンソールの **Limits で月間利用上限(Spend Limit)を設定しておくことを強く推奨**
+3. Vercelダッシュボード → プロジェクト → **Settings → Environment Variables** で
+   - Key: `ANTHROPIC_API_KEY`
+   - Value: 取得したキー(`sk-ant-...`)
+4. **Deployments から Redeploy**(環境変数は再デプロイ後に反映されます)
 
-1. 各画像を保存し `images/` フォルダに配置(例: `hero.png` / `feather.png` / `dawn.png`)
-2. `index.html` 内の `https://d8j0ntlcm91z4.cloudfront.net/...` のURL3箇所を `images/〇〇.png` に置換
+これをしないとチャットは「接続に失敗しました」になります。LP自体は今まで通り表示されます。
 
-## 更新したい箇所
+## カスタマイズ
 
-- ストリーミングリンク: `index.html` 内 `.links` の `href="#"` を実URLに
-- アーティスト名・リリース日: フッターやヒーローに追記可
+- **カナトの設定変更**: `api/chat.js` 冒頭の `PROFILE` を編集 → push
+- **ボタン文言・挨拶の変更**: `index.html` のウィジェット読み込みタグの前に
+  ```html
+  <script>window.KANATO_CONFIG = { buttonLabel: "カナトと話す", firstMessage: "……" };</script>
+  ```
+
+## コスト・悪用対策
+
+実装済み: 履歴は直近20メッセージまで / 1メッセージ1000文字まで / 応答は最大600トークン。
+1往復あたり数円以下が目安ですが、公開後アクセスが増えたらVercelのFirewall(Rate Limiting)の設定を検討してください。
+
+## 既存の注意事項(前バージョンから引き継ぎ)
+
+- ビジュアル3枚は生成元CDNのURLを直接参照しています。恒久公開時は画像をダウンロードして `images/` に置き、`index.html` 内のURLを差し替えることを推奨
+- ストリーミングリンク(`.links` の `href="#"`)は実URLに差し替え
