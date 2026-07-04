@@ -236,6 +236,85 @@
   .dawn h2 { text-shadow: 0 2px 30px rgba(7, 11, 30, 0.9); }
   .dawn .lead { color: var(--ink); opacity: 0.85; text-shadow: 0 2px 20px rgba(7, 11, 30, 0.9); }
 
+  /* ---------- members ---------- */
+  .members-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1rem, 2.5vw, 2rem);
+    max-width: 1100px;
+    margin: 3.5rem auto 0;
+  }
+  @media (max-width: 900px) { .members-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .members-grid { grid-template-columns: 1fr; max-width: 320px; } }
+  .member-card {
+    background: rgba(16, 26, 63, 0.45);
+    border: 1px solid rgba(127, 169, 242, 0.18);
+    border-radius: 6px;
+    overflow: hidden;
+    backdrop-filter: blur(4px);
+  }
+  .member-photo {
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+  }
+  .member-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    filter: saturate(0.88) contrast(1.02);
+    transition: transform 0.8s ease, filter 0.8s ease;
+  }
+  .member-card:hover .member-photo img { transform: scale(1.04); filter: saturate(1) contrast(1.02); }
+  @media (prefers-reduced-motion: reduce) { .member-photo img { transition: none; } }
+  .member-body { padding: 1.3rem 1.2rem 1.5rem; }
+  .member-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.34em;
+    color: var(--bird-blue);
+    text-transform: uppercase;
+  }
+  .member-name {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 500;
+    font-size: 1.25rem;
+    letter-spacing: 0.2em;
+    margin: 0.35rem 0 0.1rem;
+  }
+  .member-age {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    color: var(--ink-dim);
+    margin-bottom: 0.8rem;
+  }
+  .member-bio {
+    font-size: 0.8rem;
+    line-height: 2;
+    letter-spacing: 0.05em;
+    color: var(--ink-dim);
+  }
+
+  /* ---------- recording ---------- */
+  .recording-wrap { max-width: 1100px; margin: 3.5rem auto 0; }
+  .recording-figure {
+    margin: 0;
+    border: 1px solid rgba(127, 169, 242, 0.18);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--night-blue);
+  }
+  .recording-figure img { width: 100%; display: block; }
+  .recording-figure figcaption {
+    padding: 1rem 1.4rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    color: var(--ink-dim);
+    text-align: right;
+    border-top: 1px solid rgba(127, 169, 242, 0.12);
+  }
+
   /* ---------- lyrics ---------- */
   .lyrics-panel {
     max-width: 640px;
@@ -443,6 +522,71 @@
             僕は行くんだ</strong>
           </p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BAND -->
+  <section>
+    <div class="reveal">
+      <div class="narrow" style="text-align:center;">
+        <p class="section-label"><span class="latin">BAND</span>奏でる4人</p>
+        <h2 class="serif">RockBand<span style="opacity:.55;">(仮)</span></h2>
+        <p class="lead" style="margin-top:1.4rem;">名前より先に、音があった。ライブハウスで出会った4人は、バンド名を決めるより早く走り出してしまい——(仮)が取れないまま、最初の歌を空へ放つ。</p>
+      </div>
+      <div class="members-grid">
+        <div class="member-card">
+          <div class="member-photo"><img src="images/kanato.jpg" alt="ボーカルのカナト。癖のある茶髪と、まっすぐな眼差し" loading="lazy"></div>
+          <div class="member-body">
+            <p class="member-role">Vocal</p>
+            <p class="member-name">カナト</p>
+            <p class="member-age">22 — 神奈川・海沿いの町出身</p>
+            <p class="member-bio">最年少。普段は口数が少なく、言葉を選んでゆっくり話す。マイクの前でだけ、誰よりも饒舌になる。「bluebird」の譜面を初めて受け取った日、「これは俺のことだ」と思ったという。</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <div class="member-photo"><img src="images/shogo.jpg" alt="ギタリストのショウゴ。金髪を結び、黒いストラトを構える" loading="lazy"></div>
+          <div class="member-body">
+            <p class="member-role">Guitar</p>
+            <p class="member-name">ショウゴ</p>
+            <p class="member-age">26 — バンドの兄貴分</p>
+            <p class="member-bio">最年長。ステージでは一番派手に暴れるが、機材の手入れは誰よりも静かで丁寧。傷だらけのヴィンテージ・ストラトで、夜の景色を塗り替える音を鳴らす。</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <div class="member-photo"><img src="images/gaku.jpg" alt="ベーシストのガク。黒髪に眼鏡、首にスカーフ" loading="lazy"></div>
+          <div class="member-body">
+            <p class="member-role">Bass</p>
+            <p class="member-name">ガク</p>
+            <p class="member-age">24 — 物静かな理論派</p>
+            <p class="member-bio">読書家で、アレンジの設計士。多くを語らないが、曲の骨格はほとんど彼の手の中で組み上がる。低音で物語の足場を組み、4人ぶんの夜を静かに支える。</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <div class="member-photo"><img src="images/yuichi.jpg" alt="ドラマーのユウイチ。屋上のドラムセットの前でスティックを持つ" loading="lazy"></div>
+          <div class="member-body">
+            <p class="member-role">Drums</p>
+            <p class="member-name">ユウイチ</p>
+            <p class="member-age">23 — バンドの心拍</p>
+            <p class="member-bio">体育会系のムードメーカーで、裏表がない。空の下で叩くのが好きで、リハ場所はいつも屋上。彼のカウントが鳴るまで、この4人の曲は始まらない。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECORDING -->
+  <section id="recording-sec">
+    <div class="reveal">
+      <div class="narrow" style="text-align:center;">
+        <p class="section-label"><span class="latin">RECORDING</span>制作の記録</p>
+        <h2 class="serif">この歌が、生まれる場所。</h2>
+      </div>
+      <div class="recording-wrap">
+        <figure class="recording-figure">
+          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32W4VmoO5wdZGbu09vQhRHPJYdP/hf_20260704_181036_728bc640-4bdf-4e9c-b109-b6bafccea5a9.png" alt="レコーディングスタジオで演奏する4人。青いスタジオの灯りの中で「bluebird」を録音している" loading="lazy" onerror="document.getElementById('recording-sec').style.display='none'">
+          <figcaption>「bluebird」レコーディングセッションより</figcaption>
+        </figure>
       </div>
     </div>
   </section>
