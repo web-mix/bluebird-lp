@@ -374,6 +374,15 @@
   }
   audio { width: 100%; display: block; }
   .player-note { margin-top: 0.9rem; font-size: 0.7rem; letter-spacing: 0.18em; color: var(--ink-dim); }
+  .player-credit {
+    margin-top: 0.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--ink-dim);
+    cursor: help;
+    transition: color 0.6s ease;
+  }
+  .player-credit:hover { color: var(--dawn-gold); }
   .links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
   .links a {
     color: var(--starlight);
@@ -602,6 +611,7 @@
           お使いのブラウザは音声再生に対応していません。
         </audio>
         <p class="player-note">DEMO音源のため、正式リリース時に差し替え予定</p>
+        <p class="player-credit serif" title="——多くは語れない">words &amp; music&nbsp;&mdash;&nbsp;<span class="latin">EM</span></p>
       </div>
       <div class="links">
         <a href="#" aria-label="Spotifyで聴く">Spotify</a>
@@ -611,6 +621,7 @@
     </div>
   </section>
 
+  <!-- to E.M. — 檻の外から、歌ってる。 -->
   <footer>
     <span class="latin">bluebird</span>&nbsp;&nbsp;&copy;&nbsp;2026&nbsp;All Rights Reserved
   </footer>
