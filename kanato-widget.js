@@ -1,5 +1,6 @@
 /* ============================================================
- * カナト チャットウィジェット — bluebird LP 統合版
+ * RockBand(仮) メンバーチャットウィジェット — bluebird LP 統合版
+ * 日替わりで当番メンバーが交代します(日本時間0時、api/chat.js と同じ計算式)。
  * 配色・フォントはLP本体(index.html)のトークンに合わせています:
  *   night-deep #070B1E / night-blue #101A3F / ultramarine #26397A
  *   starlight #C9D9FF / bird-blue #7FA9F2 / dawn-gold #E9CE93
@@ -8,19 +9,51 @@
 (function () {
   "use strict";
 
+  // ------- 日替わり当番(api/chat.js と同じロジック) -------
+  var ROTATION = ["kanato", "shogo", "gaku", "yuichi"];
+  var MEMBERS = {
+    kanato: {
+      name: "カナト",
+      role: "Vo.",
+      firstMessage:
+        "……来てくれたんだ。俺はカナト。RockBand(仮)でボーカルやってる。\n(仮)は……まあ、そのうち取れるかもな。今は「bluebird」のMV作ってるとこ。なんか聞きたいことあれば、どうぞ。",
+    },
+    shogo: {
+      name: "ショウゴ",
+      role: "Gt.",
+      firstMessage:
+        "おう、来たか。俺はショウゴ、ギター弾いてる。今日は俺が当番なんだと。カナトじゃなくて悪いな。\nbluebirdのことでも、ギターのことでも、なんでも聞けよ。",
+    },
+    gaku: {
+      name: "ガク",
+      role: "Ba.",
+      firstMessage:
+        "……どうも。ベースのガクです。今日の当番は僕らしい。\n口数は多くないけど、質問には答える。曲の構造の話なら、少し長くなるかもしれない。",
+    },
+    yuichi: {
+      name: "ユウイチ",
+      role: "Dr.",
+      firstMessage:
+        "よっ、来てくれてありがとな! ドラムのユウイチです、今日は俺の番!\nbluebirdのこと、レコーディングの裏話、なんでも聞いてくれよ!",
+    },
+  };
+  var todayId = ROTATION[Math.floor((Date.now() + 9 * 3600 * 1000) / 86400000) % ROTATION.length];
+  var today = MEMBERS[todayId];
+
   var cfg = Object.assign(
     {
       apiUrl: "/api/chat",
-      artistName: "カナト",
+      artistName: today.name,
+      artistRole: today.role,
       bandName: "RockBand(仮)",
-      firstMessage:
-        "……来てくれたんだ。俺はカナト。RockBand(仮)でボーカルやってる。\n(仮)は……まあ、そのうち取れるかもな。今は「bluebird」のMV作ってるとこ。なんか聞きたいことあれば、どうぞ。",
-      buttonLabel: "カナトと話す",
+      firstMessage: today.firstMessage,
+      buttonLabel: "今日は" + today.name + "と話せる",
     },
     window.KANATO_CONFIG || {}
   );
 
-  var STORAGE_KEY = "kanato_chat_history_v1";
+  // 当番が変わったら履歴もリセット(昨日の会話を別メンバーが引き継がないように)
+  var STORAGE_KEY = "kanato_chat_history_v2_" + todayId;
   var MAX_INPUT = 1000;
 
   // ------- 履歴 (タブを閉じるまで保持) -------
@@ -123,7 +156,7 @@
     '    <div class="kw-avatar" aria-hidden="true">◆</div>' +
     "    <div>" +
     '      <div class="kw-name">' + esc(cfg.artistName) + "</div>" +
-    '      <div class="kw-band">' + esc(cfg.bandName) + " — Vo.</div>" +
+    '      <div class="kw-band">' + esc(cfg.bandName) + " — " + esc(cfg.artistRole) + " ・ 今日の当番</div>" +
     "    </div>" +
     '    <div class="kw-hdr-btns">' +
     '      <button class="kw-btn kw-clear" type="button">リセット</button>' +
