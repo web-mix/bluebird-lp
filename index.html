@@ -97,16 +97,17 @@
     box-shadow: 0 0 10px 3px rgba(127, 169, 242, 0.85), 0 0 26px 8px rgba(127, 169, 242, 0.35);
     animation: heroFall var(--md, 12s) linear infinite;
   }
-  .hero-mote.m1 { width: 6px; height: 6px; left: 78%; top: 34%; --md: 11s; --dx: -14vw; --dy: 34vh; }
-  .hero-mote.m2 { width: 4px; height: 4px; left: 70%; top: 28%; --md: 14s; --dx: -10vw; --dy: 40vh; animation-delay: 3s; }
-  .hero-mote.m3 { width: 5px; height: 5px; left: 83%; top: 40%; --md: 12s; --dx: -18vw; --dy: 30vh; animation-delay: 6s; }
-  .hero-mote.m4 { width: 3px; height: 3px; left: 74%; top: 38%; --md: 16s; --dx: -8vw;  --dy: 44vh; animation-delay: 9s; }
-  .hero-mote.m5 { width: 4px; height: 4px; left: 80%; top: 30%; --md: 13s; --dx: -13vw; --dy: 38vh; animation-delay: 12s; }
+  /* 軌道は鳥の後方(左下)へ。両軸ともvh基準にして画面比率に関わらず斜めを保つ */
+  .hero-mote.m1 { width: 6px; height: 6px; left: 78%; top: 34%; --md: 11s; --dx: -26vh; --dy: 26vh; }
+  .hero-mote.m2 { width: 4px; height: 4px; left: 70%; top: 28%; --md: 14s; --dx: -20vh; --dy: 30vh; animation-delay: 3s; }
+  .hero-mote.m3 { width: 5px; height: 5px; left: 83%; top: 40%; --md: 12s; --dx: -32vh; --dy: 24vh; animation-delay: 6s; }
+  .hero-mote.m4 { width: 3px; height: 3px; left: 74%; top: 38%; --md: 16s; --dx: -18vh; --dy: 32vh; animation-delay: 9s; }
+  .hero-mote.m5 { width: 4px; height: 4px; left: 80%; top: 30%; --md: 13s; --dx: -26vh; --dy: 28vh; animation-delay: 12s; }
   @keyframes heroFall {
     0%   { transform: translate(0, 0); opacity: 0; }
     6%   { opacity: 1; }
     55%  { opacity: 0.65; }
-    100% { transform: translate(var(--dx, -14vw), var(--dy, 36vh)); opacity: 0; }
+    100% { transform: translate(var(--dx, -26vh), var(--dy, 26vh)); opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
     .hero-glow, .hero-mote { animation: none; }
