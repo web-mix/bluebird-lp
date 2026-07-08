@@ -112,6 +112,11 @@
     .hero-glow, .hero-mote { animation: none; }
     .hero-glow { opacity: 0.35; }
   }
+  /* 縦長画面: 表示帯が狭くなるため、くちばし(画像の約84%)まで入るよう基準をさらに鳥寄りに */
+  @media (max-width: 900px) {
+    .hero-img { background-position: 80% 50%; }
+    .hero-glow { background: radial-gradient(26% 30% at 55% 30%, rgba(127, 169, 242, 0.33), transparent 72%); }
+  }
 
   .hero::after {
     content: "";
