@@ -81,9 +81,38 @@
     inset: 0;
     background-image: url('images/hero.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: 72% 50%; /* 縦長画面でも青い鳥がフレームに残るよう鳥寄りに */
     z-index: -1;
   }
+  /* ---------- hero motion(鳥の光の呼吸と、こぼれ落ちる光の粒) ---------- */
+  .hero-glow {
+    position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: radial-gradient(20% 28% at 72% 30%, rgba(127, 169, 242, 0.33), transparent 72%);
+    animation: heroBreath 5.6s ease-in-out infinite;
+  }
+  @keyframes heroBreath { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.8; } }
+  .hero-mote {
+    position: absolute; z-index: -1; pointer-events: none; border-radius: 50%;
+    background: #DCE8FF; filter: blur(0.6px); opacity: 0;
+    box-shadow: 0 0 10px 3px rgba(127, 169, 242, 0.85), 0 0 26px 8px rgba(127, 169, 242, 0.35);
+    animation: heroFall var(--md, 12s) linear infinite;
+  }
+  .hero-mote.m1 { width: 6px; height: 6px; left: 78%; top: 34%; --md: 11s; --dx: -14vw; --dy: 34vh; }
+  .hero-mote.m2 { width: 4px; height: 4px; left: 70%; top: 28%; --md: 14s; --dx: -10vw; --dy: 40vh; animation-delay: 3s; }
+  .hero-mote.m3 { width: 5px; height: 5px; left: 83%; top: 40%; --md: 12s; --dx: -18vw; --dy: 30vh; animation-delay: 6s; }
+  .hero-mote.m4 { width: 3px; height: 3px; left: 74%; top: 38%; --md: 16s; --dx: -8vw;  --dy: 44vh; animation-delay: 9s; }
+  .hero-mote.m5 { width: 4px; height: 4px; left: 80%; top: 30%; --md: 13s; --dx: -13vw; --dy: 38vh; animation-delay: 12s; }
+  @keyframes heroFall {
+    0%   { transform: translate(0, 0); opacity: 0; }
+    6%   { opacity: 1; }
+    55%  { opacity: 0.65; }
+    100% { transform: translate(var(--dx, -14vw), var(--dy, 36vh)); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-glow, .hero-mote { animation: none; }
+    .hero-glow { opacity: 0.35; }
+  }
+
   .hero::after {
     content: "";
     position: absolute;
@@ -443,6 +472,12 @@
   <!-- HERO -->
   <header class="hero">
     <div class="hero-img" role="img" aria-label="星空を舞う、光をまとった青い鳥"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <span class="hero-mote m1" aria-hidden="true"></span>
+    <span class="hero-mote m2" aria-hidden="true"></span>
+    <span class="hero-mote m3" aria-hidden="true"></span>
+    <span class="hero-mote m4" aria-hidden="true"></span>
+    <span class="hero-mote m5" aria-hidden="true"></span>
     <div class="hero-inner">
       <p class="hero-eyebrow serif">オリジナル楽曲</p>
       <h1 class="hero-title latin">bluebird</h1>
