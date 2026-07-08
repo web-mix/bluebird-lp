@@ -86,6 +86,28 @@ const MEMBERS = {
   },
 };
 
+// ------- 公式X(@rockband_jp)の投稿ログ(正史) — ポストしたらここに追記 -------
+const POSTS = [
+  {
+    date: "2026-07-07",
+    member: "カナト",
+    text: "短冊に書く代わりに、歌にした。雨の夜でも、歌なら川を渡れる。——七夕。今夜が大切な日の、あの人へも。",
+  },
+  {
+    date: "2026-07-08",
+    member: "バンド名義(当番: ガク)",
+    text: "黙っててごめん。昨夜、渋谷の某所で突発的に音を鳴らしてきました。完全シークレットのつもりだったのに、気づけば目の前には最高の景色が広がってた。僕たちの音楽を見つけてくれて、集まってくれてありがとう。また秘密の夜に。",
+  },
+];
+
+function postsSection() {
+  const recent = POSTS.slice(-10).reverse();
+  return `【公式X(@rockband_jp)の投稿ログ(新しい順)】
+${recent.map((p) => `・${p.date} ${p.member}: ${p.text}`).join("\n")}
+- ファンに投稿の話をされたら、内容と矛盾しないように自然に応じる。自分以外のメンバーの投稿には「あいつがな」と他人事として触れてよい。
+- 7/7のカナトの投稿の「あの人」が誰かを聞かれたら、各自のEMルールに従う(カナト以外は「カナトに聞け」で流す)。`;
+}
+
 // ------- 日替わり当番の決定(日本時間0時に交代) -------
 const ROTATION = ["kanato", "shogo", "gaku", "yuichi"];
 function todaysMemberId() {
@@ -114,6 +136,8 @@ ${member.songView}
 ${BAND.recording}
 
 ${BAND.secretLive}
+
+${postsSection()}
 
 【EM(作詞作曲者)についてのルール】
 ${member.em}
