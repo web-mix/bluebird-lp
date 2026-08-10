@@ -364,6 +364,82 @@
     background: var(--night-blue);
   }
   .recording-figure img { width: 100%; display: block; }
+
+  /* ---------- MUSIC VIDEO ---------- */
+  /* クリックされるまでYouTubeへは一切接続しない(ローカルのポスター画像のみ) */
+  .mv-wrap { max-width: 1000px; margin: 3.5rem auto 0; }
+  .mv-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border: 1px solid rgba(127, 169, 242, 0.18);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--night-blue);
+    box-shadow: 0 24px 70px rgba(7, 11, 30, 0.6);
+  }
+  .mv-frame img, .mv-frame iframe {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    display: block; border: 0;
+  }
+  .mv-frame img { object-fit: cover; }
+  /* 夜のトーンに寄せるためのごく薄い覆い */
+  .mv-poster::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(7,11,30,0.18) 0%, rgba(7,11,30,0.52) 100%);
+    transition: background 0.5s ease;
+  }
+  .mv-poster {
+    position: absolute; inset: 0;
+    padding: 0; border: 0; cursor: pointer;
+    background: transparent;
+    font: inherit; color: inherit;
+  }
+  .mv-poster:hover::after, .mv-poster:focus-visible::after {
+    background: linear-gradient(180deg, rgba(7,11,30,0.10) 0%, rgba(7,11,30,0.42) 100%);
+  }
+  .mv-poster:focus-visible { outline: 2px solid var(--bird-blue); outline-offset: 3px; }
+  .mv-play {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    display: flex; align-items: center; gap: 0.9rem;
+    padding: 0.85rem 2.1rem 0.85rem 1.7rem;
+    border: 1px solid rgba(201, 217, 255, 0.42);
+    border-radius: 999px;
+    background: rgba(7, 11, 30, 0.42);
+    backdrop-filter: blur(3px);
+    color: var(--starlight);
+    font-size: 0.82rem;
+    letter-spacing: 0.24em;
+    white-space: nowrap;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+  }
+  .mv-poster:hover .mv-play, .mv-poster:focus-visible .mv-play {
+    background: rgba(127, 169, 242, 0.18);
+    box-shadow: 0 0 34px rgba(127, 169, 242, 0.38);
+  }
+  .mv-play .tri {
+    width: 0; height: 0;
+    border-left: 11px solid var(--bird-blue);
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+  }
+  .mv-meta {
+    display: flex; flex-wrap: wrap;
+    justify-content: space-between; align-items: baseline;
+    gap: 0.6rem 1.4rem;
+    margin-top: 1.1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    color: var(--ink-dim);
+  }
+  .mv-meta a { color: var(--ink-dim); text-decoration: none; border-bottom: 1px solid rgba(201, 217, 255, 0.22); }
+  .mv-meta a:hover, .mv-meta a:focus-visible { color: var(--starlight); }
+  @media (prefers-reduced-motion: reduce) {
+    .mv-poster::after, .mv-play { transition: none; }
+  }
   .recording-figure figcaption {
     padding: 1rem 1.4rem;
     font-size: 0.75rem;
@@ -535,7 +611,7 @@
       <p class="hero-tagline serif">ただ、空の蒼さが痛い。</p>
       <p class="hero-release latin">2026.8.8&nbsp;&mdash;&nbsp;DEBUT</p>
       <div class="hero-ctas">
-        <a class="hero-cta serif" href="https://www.youtube.com/@RockBand_bluebird" target="_blank" rel="noopener">▶ Full MV を観る</a>
+        <a class="hero-cta serif" href="#mv">▶ Full MV を観る</a>
         <a class="hero-cta serif" href="#listen">♪ デモ音源を聴く</a>
       </div>
     </div>
@@ -727,6 +803,29 @@
     </div>
   </section>
 
+  <!-- MUSIC VIDEO -->
+  <section id="mv">
+    <div class="reveal">
+      <div class="narrow" style="text-align:center;">
+        <p class="section-label"><span class="latin">MUSIC VIDEO</span>飛び立つ夜</p>
+        <h2 class="serif">その翼を、見ていてほしい。</h2>
+      </div>
+      <div class="mv-wrap">
+        <div class="mv-frame" id="mv-frame">
+          <button class="mv-poster" type="button" id="mv-play"
+                  aria-label="「bluebird」オフィシャル・ミュージックビデオを再生する（YouTube）">
+            <img src="images/mv-poster.jpg" alt="「bluebird」ミュージックビデオのワンシーン" loading="lazy">
+            <span class="mv-play serif" aria-hidden="true"><span class="tri"></span>Play Full MV</span>
+          </button>
+        </div>
+        <p class="mv-meta">
+          <span><span class="latin">bluebird</span>&nbsp;&mdash;&nbsp;Official Music Video&nbsp;/&nbsp;4:03</span>
+          <a href="https://www.youtube.com/watch?v=1QxPIdbHWgY" target="_blank" rel="noopener">YouTubeで観る</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- LISTEN -->
   <section class="listen" id="listen">
     <div class="reveal">
@@ -775,6 +874,22 @@
       frag.appendChild(s);
     }
     sky.appendChild(frag);
+  })();
+
+  // MV: クリックされて初めてYouTubeを読み込む(それまで外部接続なし)
+  (function () {
+    const btn = document.getElementById('mv-play');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      const frame = document.getElementById('mv-frame');
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/1QxPIdbHWgY?autoplay=1&rel=0&playsinline=1';
+      iframe.title = '「bluebird」オフィシャル・ミュージックビデオ';
+      iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      frame.replaceChildren(iframe);
+      iframe.focus();
+    }, { once: true });
   })();
 
   // scroll reveal
