@@ -906,12 +906,14 @@
 <!-- カナト チャットウィジェット -->
 <script src="kanato-widget.js" defer></script>
 
-<!-- Vercel Web Analytics(国別・ページ別のアクセス記録)
-     Cookieを使わないので同意バナーは不要。配信元は同一オリジンなので、
+<!-- Vercel Web Analytics(国別・ページ別のアクセス記録) と Speed Insights(表示速度の実測)
+     どちらもCookieを使わないので同意バナーは不要。配信元は同一オリジンなので、
      このページの外部依存はGoogle Fontsのみのまま。
      ローカル(npx serve)では404になるのが正常——Vercel上でのみ配信される。
-     Vercelダッシュボードで Analytics を有効化しないと計測は始まらない。 -->
+     ★Vercelダッシュボードでの有効化に加えて、有効化後に一度デプロイし直さないと
+       /_vercel/... のルートが組み込まれず404のままになる。 -->
 <script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 
 </body>
 </html>
