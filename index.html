@@ -155,9 +155,21 @@
     letter-spacing: 0.18em;
     color: var(--ink-dim);
   }
+  .hero-release {
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.36em;
+    color: var(--dawn-gold);
+  }
+  .hero-ctas {
+    margin-top: 2.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.9rem;
+  }
   .hero-cta {
     display: inline-block;
-    margin-top: 2.2rem;
     color: var(--starlight);
     text-decoration: none;
     border: 1px solid rgba(201, 217, 255, 0.35);
@@ -263,7 +275,7 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    background-image: url('https://d8j0ntlcm91z4.cloudfront.net/user_32W4VmoO5wdZGbu09vQhRHPJYdP/hf_20260703_175304_52dc8935-3435-4cb4-8bbe-821c5e4065d3.png');
+    background-image: url('images/dawn.jpg');
     background-size: cover;
     background-position: center;
   }
@@ -445,6 +457,25 @@
     color: #fff;
   }
   .links a:focus-visible { outline: 2px solid var(--bird-blue); outline-offset: 3px; }
+  /* 配信準備中のサービス(リンクにしない) */
+  .links .soon {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    color: var(--ink-dim);
+    border: 1px dashed rgba(201, 217, 255, 0.22);
+    border-radius: 999px;
+    padding: 0.7rem 1.6rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.22em;
+    cursor: default;
+  }
+  .links .soon small {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    color: var(--bird-blue);
+    opacity: 0.75;
+  }
 
   footer {
     text-align: center;
@@ -499,10 +530,14 @@
     <span class="hero-mote m4" aria-hidden="true"></span>
     <span class="hero-mote m5" aria-hidden="true"></span>
     <div class="hero-inner">
-      <p class="hero-eyebrow serif">オリジナル楽曲</p>
+      <p class="hero-eyebrow serif">1st Digital Single</p>
       <h1 class="hero-title latin">bluebird</h1>
       <p class="hero-tagline serif">ただ、空の蒼さが痛い。</p>
-      <a class="hero-cta serif" href="#listen">♪ デモ音源を聴く</a>
+      <p class="hero-release latin">2026.8.8&nbsp;&mdash;&nbsp;DEBUT</p>
+      <div class="hero-ctas">
+        <a class="hero-cta serif" href="https://www.youtube.com/@RockBand_bluebird" target="_blank" rel="noopener">▶ Full MV を観る</a>
+        <a class="hero-cta serif" href="#listen">♪ デモ音源を聴く</a>
+      </div>
     </div>
   </header>
 
@@ -527,7 +562,7 @@
   <section>
     <div class="feather-sec">
       <div class="reveal">
-        <img class="feather-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_32W4VmoO5wdZGbu09vQhRHPJYdP/hf_20260703_175258_dbb83ce5-18b9-4f19-bd0c-d4921c375473.png" alt="月明かりの雲の上を、光る青い羽根がひとひら舞い落ちる">
+        <img class="feather-img" src="images/feather.jpg" alt="月明かりの雲の上を、光る青い羽根がひとひら舞い落ちる" loading="lazy">
       </div>
       <div class="reveal">
         <p class="section-label"><span class="latin">II.</span>翼 — つばさ</p>
@@ -685,7 +720,7 @@
       </div>
       <div class="recording-wrap">
         <figure class="recording-figure">
-          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32W4VmoO5wdZGbu09vQhRHPJYdP/hf_20260704_181036_728bc640-4bdf-4e9c-b109-b6bafccea5a9.png" alt="レコーディングスタジオで演奏する4人。青いスタジオの灯りの中で「bluebird」を録音している" loading="lazy" onerror="document.getElementById('recording-sec').style.display='none'">
+          <img src="images/recording.jpg" alt="レコーディングスタジオで演奏する4人。青いスタジオの灯りの中で「bluebird」を録音している" loading="lazy">
           <figcaption>「bluebird」レコーディングセッションより</figcaption>
         </figure>
       </div>
@@ -696,7 +731,7 @@
   <section class="listen" id="listen">
     <div class="reveal">
       <h2 class="listen-title latin">Listen to &ldquo;bluebird&rdquo;</h2>
-      <p class="listen-sub serif">デモ音源を公開中</p>
+      <p class="listen-sub serif">Full MV、YouTubeにて公開中</p>
       <div class="player-wrap">
         <p class="player-label serif">DEMO&nbsp;VER.&nbsp;&mdash;&nbsp;bluebird</p>
         <audio controls preload="metadata" src="bluebird_demo.mp3">
@@ -705,9 +740,9 @@
         <p class="player-credit serif" title="——多くは語れない">words &amp; music&nbsp;&mdash;&nbsp;<span class="latin">EM</span></p>
       </div>
       <div class="links">
-        <a href="#" aria-label="Spotifyで聴く">Spotify</a>
-        <a href="#" aria-label="Apple Musicで聴く">Apple Music</a>
-        <a href="https://www.youtube.com/@RockBand_bluebird" target="_blank" rel="noopener" aria-label="YouTubeで観る">YouTube</a>
+        <a href="https://www.youtube.com/@RockBand_bluebird" target="_blank" rel="noopener" aria-label="YouTubeでFull MVを観る">YouTube</a>
+        <span class="soon" aria-label="Spotifyは配信準備中">Spotify<small>準備中</small></span>
+        <span class="soon" aria-label="Apple Musicは配信準備中">Apple Music<small>準備中</small></span>
         <a href="https://x.com/rockband_jp" target="_blank" rel="noopener" aria-label="公式Xを見る">X</a>
       </div>
     </div>
